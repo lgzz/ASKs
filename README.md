@@ -1,2 +1,2 @@
 # ASKs
-ASKs(Neurocomputing.2021)
+Asks: Convolution with any-shape kernels for efficient neural networks (Neurocomputing.2021)
