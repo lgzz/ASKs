@@ -1,14 +1,11 @@
-from __future__ import absolute_import
 import math
-
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 from functools import partial
 from torch.autograd import Variable
 from .AnyModule import *
 
-__all__ = ['resnet_any']
+__all__ = ['resnet_any', 'any_resnet20_cfglist', 'any_resnet32_cfglist', 'any_resnet56_cfglist']
 
 any_resnet20_cfglist = {
     'ASK_7'  :[[[1,2,4,5,6,8,9],[2,3,4,5,6,7,8]] for i in range(19)],

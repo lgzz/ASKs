@@ -1,11 +1,8 @@
-from __future__ import print_function
 import argparse
-import numpy as np
 import os
 import shutil
 
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
@@ -14,9 +11,8 @@ from torch.autograd import Variable
 import models
 from compute_flops import *
 
-
 # Training settings
-parser = argparse.ArgumentParser(description='PyTorch Slimming CIFAR training')
+parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', type=str, default='cifar10',
                     help='training dataset (default: cifar10)')
 parser.add_argument('--batch-size', type=int, default=64, metavar='N',
@@ -42,7 +38,7 @@ parser.add_argument('--seed', type=int, default=1, metavar='S',
 parser.add_argument('--log-interval', type=int, default=100, metavar='N',
                     help='how many batches to wait before logging training status')
 parser.add_argument('--save', default='./logs', type=str, metavar='PATH',
-                    help='path to save prune model (default: current directory)')
+                    help='path to save model')
 parser.add_argument('--arch', default='vgg', type=str, 
                     help='architecture to use')
 parser.add_argument('--depth', default='16', type=str,
@@ -62,17 +58,15 @@ if args.cuda:
 kwargs = {'num_workers': 1, 'pin_memory': True} if args.cuda else {}
 
 def main():
-
     if not os.path.exists(args.save):
         os.makedirs(args.save)
-
     log = open(os.path.join(args.save, 'log_seed_{}.txt'.format(args.seed)), 'w')
-    #state = {k: v for k, v in args._get_kwargs()}
-    #print_log(state, log)
+    state = {k: v for k, v in args._get_kwargs()}
+    print_log(state, log)
 
     if args.dataset == 'cifar10':
         train_loader = torch.utils.data.DataLoader(
-            datasets.CIFAR10('./data', train=True, download=True,
+            datasets.CIFAR10('../data', train=True, download=True,
                         transform=transforms.Compose([
                             transforms.Pad(4),
                             transforms.RandomCrop(32),
@@ -82,14 +76,14 @@ def main():
                         ])),
             batch_size=args.batch_size, shuffle=True, **kwargs)
         test_loader = torch.utils.data.DataLoader(
-            datasets.CIFAR10('./data', train=False, transform=transforms.Compose([
+            datasets.CIFAR10('../data', train=False, transform=transforms.Compose([
                             transforms.ToTensor(),
                             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
                         ])),
             batch_size=args.test_batch_size, shuffle=True, **kwargs)
     else:
         train_loader = torch.utils.data.DataLoader(
-            datasets.CIFAR100('./data', train=True, download=True,
+            datasets.CIFAR100('../data', train=True, download=True,
                         transform=transforms.Compose([
                             transforms.Pad(4),
                             transforms.RandomCrop(32),
@@ -99,7 +93,7 @@ def main():
                         ])),
             batch_size=args.batch_size, shuffle=True, **kwargs)
         test_loader = torch.utils.data.DataLoader(
-            datasets.CIFAR100('./data', train=False, transform=transforms.Compose([
+            datasets.CIFAR100('../data', train=False, transform=transforms.Compose([
                             transforms.ToTensor(),
                             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
                         ])),
@@ -109,8 +103,6 @@ def main():
         model = models.__dict__[args.arch](dataset=args.dataset, depth=args.depth, anycfg=args.anycfg)
     else:
         model = models.__dict__[args.arch](dataset=args.dataset, depth=args.depth)
-
-    #print_log(model, log)	
 	
     if args.cuda:
         model.cuda()
@@ -120,7 +112,6 @@ def main():
     best_prec1 = 0.
     if args.resume:
         if os.path.isfile(args.resume):
-            print_log("=> loading checkpoint '{}'".format(args.resume), log)
             checkpoint = torch.load(args.resume)
             args.start_epoch = checkpoint['epoch']
             best_prec1 = checkpoint['best_prec1']

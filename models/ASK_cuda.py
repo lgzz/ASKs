@@ -1,8 +1,6 @@
-from torch import nn
 import torch
-
+import torch.nn as nn
 import ask_cuda
-
 
 any_func_list = {    
 	'[[1,2,4,5,6,8,9],[2,3,4,5,6,7,8]]' : ask_cuda.ask_d2_1245689_2345678_cuda_forward,

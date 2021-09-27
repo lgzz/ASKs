@@ -1,11 +1,10 @@
 import math
-
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
 from .AnyModule import *
 
-__all__ = ['vgg_any', 'any_vgg16_cfglist']
+__all__ = ['vgg_any', 'any_vgg11_cfglist', 'any_vgg13_cfglist', 'any_vgg16_cfglist', 'any_vgg19_cfglist']
 
 defaultcfg = {
     '11' : [64, 'M', 128, 'M', 256, 256, 'M', 512, 512, 'M', 512, 512],
