@@ -109,7 +109,7 @@ python validate.py --arch resnet_any --depth 20 --anycfg ASK_5a --resume ./logs/
 
 |  Network  | Kernel | Params. (M) | FLOPs (M) | Latency (ms) | Accuracy |
 |  :----:   | :----: |    :----:   |  :----:   |   :----:     |  :----:  |
-| ResNet-56 |  3x3   |     0.85    |    127    |    6.614     |  93.16%  |
+| ResNet-56 |  3x3   |     0.85    |    127    |    6.614     |  93.06%  |
 | ResNet-56 | ASK_7  |     0.66    |    99.2   |    5.639     |**93.59%**|
 | ResNet-56 | ASK_6  |     0.57    |    85.3   |    5.620     |  93.12%  |
 | ResNet-56 | ASK_5a |     0.48    |    71.3   |    5.616     |  92.86%  |
