@@ -1,6 +1,6 @@
 # ASKs: Convolution with any-shape kernels for efficient neural networks
 ## Introduction
-This is the PyTorch implementation and CUDA program of our paper "[ASKs: Convolution with any-shape kernels for efficient neural networks](https://www.sciencedirect.com/science/article/pii/S0925231221004070)".
+This is the Pytorch implementation and CUDA program of our paper "[ASKs: Convolution with any-shape kernels for efficient neural networks](https://www.sciencedirect.com/science/article/pii/S0925231221004070)".
 
 ## Requirements
 Python 3.6.0  
