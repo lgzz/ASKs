@@ -122,7 +122,6 @@ python validate.py --arch resnet_any --depth 20 --anycfg ASK_5a --resume ./logs/
 
 ## Tips
 * Our test environment is NVIDIA GeForce RTX 3090 GPU and Pytorch 1.9.0. Different environments may lead to slightly different results.
-* We have only written the CUDA program of the forward function. If you also write the CUDA program of the backward function, both training and inference can be accelerated, and there is no need to validate the compressed model.
 * You can design the shapes of convolution kernels according to your own needs or ideas, and imitate the given codes for implementation and acceleration.
 * You can try different kernel shapes for different layers by changing the cfglist, for example:
 ```python
@@ -151,6 +150,12 @@ any_vgg16_cfglist = {
           [[2,5],[4,5],[5,6],[5,8]]],   #The first 10 layers use ASK_5a, and the last 3 layers use ASK_2.
 }
 ```
+
+## Limitations
+* We have only written the CUDA program of the forward function. If you also write the CUDA program of the backward function, both training and inference can be accelerated, and there is no need to validate the compressed model.
+* On the Cifar-10/100 dataset, setting the test-batch-size to 1 can achieve rel acceleration, but when the test-batch-size is greater than 1, the acceleration cannot be achieved. On ImageNet, acceleration cannot be achieved. Therefore, the CUDA program needs to be improved, and you are welcome to contribute to this.
+
+
 ## Citation
 
 If you find this work useful, please cite the following paper:
