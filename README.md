@@ -121,7 +121,7 @@ python validate.py --arch resnet_any --depth 20 --anycfg ASK_5a --resume ./logs/
 | ResNet-56 | ASK_2  |   **0.19**  |  **29.5** |  **5.519**   |  90.23%  |
 
 ## Tips
-* Our test environment is NVIDIA GeForce RTX 3090 GPU and PyTorch 1.9.0. Different environments may lead to slightly different results.
+* Our test environment is NVIDIA GeForce RTX 3090 GPU and Pytorch 1.9.0. Different environments may lead to slightly different results.
 * We have only written the CUDA program of the forward function. If you also write the CUDA program of the backward function, both training and inference can be accelerated, and there is no need to validate the compressed model.
 * You can design the shapes of convolution kernels according to your own needs or ideas, and imitate the given codes for implementation and acceleration.
 * You can try different kernel shapes for different layers by changing the cfglist, for example:
