@@ -148,7 +148,6 @@ def main():
 	
 def train(train_loader, model, optimizer, epoch, log):
     model.train()
-    avg_loss = 0.
     train_acc = 0.
     for batch_idx, (data, target) in enumerate(train_loader):
         if args.cuda:
@@ -158,7 +157,6 @@ def train(train_loader, model, optimizer, epoch, log):
         optimizer.zero_grad()
         output = model(data)
         loss = F.cross_entropy(output, target)
-        avg_loss += loss.item()
         pred = output.data.max(1, keepdim=True)[1]
         train_acc += pred.eq(target.data.view_as(pred)).cpu().sum()
         loss.backward()
